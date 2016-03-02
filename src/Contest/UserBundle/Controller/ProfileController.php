@@ -66,11 +66,11 @@ class ProfileController extends BaseController
 
         $user = $this->container->get('security.context')->getToken()->getUser();
         $votes = $user->getVotes();
-        $images = array();
-        foreach($votes as $vote){
-            dump($vote);
-        }die();
-        //dump($images);die();
+
+        $contest = array();
+        foreach($votes as $vote){;
+            $contest[] = $vote->getContest();
+        }
         return array('votes' => $votes);
     }
 }
