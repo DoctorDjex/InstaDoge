@@ -1,0 +1,46 @@
+{% extends "::base.html.twig" %}
+
+{% form_theme form 'ContestContestBundle:Form:contest_custom_fields.html.twig' %}
+
+{% block title %}ContestContestBundle:Contest:create{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/contestcontest/js/jquery.datetimepicker.full.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery('.datetimepicker').datetimepicker({
+                format:'Y-m-d H:i:00'
+            });
+        });
+
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/contestcontest/css/jquery.datetimepicker.css') }}" />
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div id="content">
+            <a href="{{ url('contest_list') }}"><< Retourner à la liste des concours</a>
+            <h1>Créer un concours</h1>
+            {% if error is defined and not error %}
+                Le concours a été créé !
+            {% endif %}
+
+
+            {{ form_start(form) }}
+
+            {{ form_row(form.title) }}
+            {{ form_label(form.beginDate, 'Date début') }}
+            {{ form_widget(form.beginDate) }}
+            {{ form_label(form.endDate, 'Date fin') }}
+            {{ form_widget(form.endDate) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

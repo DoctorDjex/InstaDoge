@@ -1,0 +1,12 @@
+services:
+    admin.contest:
+        class: Contest\AdminBundle\Admin\ContestAdmin
+        arguments: [~, Contest\ContestBundle\Entity\Contest, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Contest }
+
+    admin.image:
+        class: Contest\AdminBundle\Admin\ImageAdmin
+        arguments: [~, Contest\ContestBundle\Entity\Image, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Image }

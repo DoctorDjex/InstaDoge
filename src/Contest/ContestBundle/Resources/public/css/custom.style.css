@@ -1,0 +1,14 @@
+div.image-container{
+    min-height: 200px;
+}
+
+div.image-container img{
+    width: 33.333%;
+    min-height: 200px;
+    float: left;
+    margin-right: 10px;
+}
+
+div.image-container div.image-description{
+    float: left;
+}

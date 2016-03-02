@@ -1,0 +1,21 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}ContestContestBundle:Image:uploadImage{% endblock %}
+
+{% block content %}
+    <div id="main-wrapper">
+        <div class="container">
+            <div id="content">
+                {% if error is not defined %}
+                Merci d'avoir voté !
+                {% else %}
+                    Vous avez déjà voté pour cette photo !
+                {% endif %}
+
+                <p><a href="{{ url('contest_list') }}">Retourner à la liste des concours</a></p>
+                <p><a href="{{ url('contest_gallery', {slug:image.contest.slug}) }}">Retourner à la gallerie</a></p>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

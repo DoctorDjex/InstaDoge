@@ -1,0 +1,38 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <!-- Main -->
+    <div id="main-wrapper">
+        <div class="container">
+            <div id="content">
+                {# total items count #}
+                <div class="count">
+                    Résultats par page : {{ pagination.getTotalItemCount }}
+                </div>
+                <table style="border:black 1px solid; text-align:center">
+                    <tr>
+                        {# sorting of properties based on query components #}
+                        <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'a.title') }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Créé le', ['a.date', 'a.time']) }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Commence le', ['a.date']) }}</th>
+                        <th>{{ knp_pagination_sortable(pagination, 'Termine le', ['a.date']) }}</th>
+                    </tr>
+
+                    {# table body #}
+                    {% for article in pagination %}
+                        <tr {% if loop.index is odd %}class="color"{% endif %}>
+                            <td><a href="{{ url('contest_details', {slug: article.slug}) }}">{{ article.title }}</a></td>
+                            <td>{{ article.createdAt | date('d M Y') }}</td>
+                            <td>{{ article.beginDate | date('d M Y') }}</td>
+                            <td>{{ article.endDate | date('d M Y') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {# display navigation #}
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

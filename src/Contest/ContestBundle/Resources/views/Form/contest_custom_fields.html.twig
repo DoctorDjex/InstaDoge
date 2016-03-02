@@ -1,0 +1,6 @@
+<!-- overwrite the element you want to change (in this case default input-field -->
+{% block datetimepicker_widget %}
+    {% spaceless %}
+        {{ form_widget(form.date) }}
+    {% endspaceless %}
+{% endblock datetimepicker_widget %}

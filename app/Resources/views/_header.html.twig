@@ -1,0 +1,36 @@
+<!-- Header -->
+<div id="header-wrapper">
+    <header id="header" class="container">
+        <!-- Logo -->
+        <div id="logo">
+            <h1><a href="{{ url('contest_index') }}">InstaDoge</a></h1>
+            <span>Woof ! Woof !</span>
+        </div>
+
+        <!-- Nav -->
+        <nav id="nav">
+            <ul>
+                <li class="current"><a href="{{ url('contest_index') }}">Bienvenue</a></li>
+                <li>
+                    <a href="#">Les concours</a>
+                    <ul>
+                        <li><a href="{{ url('contest_list') }}">En cours</a></li>
+                        <li><a href="{{ url('contest_create_contest') }}">Créer un concours</a></li>
+                    </ul>
+                </li>
+                {% if not app.user %}
+                    <li><a href="{{ url('fos_user_security_login') }}">Connexion</a></li>
+                {% else %}
+                    <li>
+                        <a href="#">Connecté en tant que {{ app.user.username }}</a>
+                        <ul>
+                            <li><a href="{{ url('fos_user_profile_edit') }}">Mon profil</a></li>
+                            <li><a href="{{ url('fos_user_security_logout') }}">Déconnexion</a></li>
+                        </ul>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    </header>
+</div>

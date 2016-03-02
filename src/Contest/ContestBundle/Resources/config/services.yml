@@ -1,0 +1,20 @@
+services:
+    contest.form.contest_type:
+        class: Contest\ContestBundle\Form\ContestType
+        tags:
+            - { name: form.type, alias: contest_type }
+
+    contest.form.image_type:
+        class: Contest\ContestBundle\Form\ImageType
+        tags:
+            - { name: form.type, alias: image_type }
+
+    contest.form.datetimepicker_type:
+            class: Contest\ContestBundle\Form\DatetimePickerType
+            tags:
+                - { name: form.type, alias: datetimepicker }
+
+    contest.form.handler.contest:
+        class: Contest\ContestBundle\Form\Handler\ContestHandler
+        arguments: [ @request, @doctrine.orm.entity_manager ]
+        scope : request
