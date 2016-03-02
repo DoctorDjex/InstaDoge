@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 /**
  * Controller managing the user profile
@@ -53,5 +56,21 @@ class ProfileController extends BaseController
     protected function getRedirectionUrl(UserInterface $user)
     {
         return $this->container->get('router')->generate('fos_user_profile_edit');
+    }
+
+    /**
+     * @Route("/user-votes", name="user_votes")
+     * @Template()
+     */
+    public function userVotesAction(){
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $votes = $user->getVotes();
+        $images = array();
+        foreach($votes as $vote){
+            dump($vote);
+        }die();
+        //dump($images);die();
+        return array('votes' => $votes);
     }
 }

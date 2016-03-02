@@ -37,10 +37,14 @@ class User extends BaseUser
     public function hadAlreadyVoted( $image ){
         foreach( $this->votes as $vote ){
             if( $image->getId() == $vote->getId() ){
-                die('ofdskokdfsofsoksdf');
+                return true;
             }
         }
 
         return false;
+    }
+
+    public function getVotes(){
+        return $this->votes;
     }
 }

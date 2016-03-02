@@ -1,0 +1,16 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <!-- Main -->
+    <div id="main-wrapper">
+        <div class="container">
+            <div id="content">
+                <ul>
+                    {% for vote in votes %}
+                        <li>{{ vote.image }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
