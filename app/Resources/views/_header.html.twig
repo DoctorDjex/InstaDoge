@@ -19,6 +19,7 @@
                     </ul>
                 </li>
                 {% if not app.user %}
+                    <li><a href="{{ url('fos_user_registration_register') }}">S'enregistrer</a></li>
                     <li><a href="{{ url('fos_user_security_login') }}">Connexion</a></li>
                 {% else %}
                     <li>

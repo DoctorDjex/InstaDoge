@@ -1,12 +1,5 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
-{% block content %}
-    <!-- Main -->
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                {% include "FOSUserBundle:Registration:register_content.html.twig" %}
-            </div>
-        </div>
-    </div>
+{% block full_content %}
+    {% include "FOSUserBundle:Registration:register_content.html.twig" %}
 {% endblock %}
