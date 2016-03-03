@@ -1,0 +1,12 @@
+{% extends '::without_sidebar.html.twig' %}
+<h2>Il y a des égalités sur plusieurs de vos concours... A vous de les départager !</h2>
+
+{% block full_content %}
+    <ul>
+    {% for contest in contests %}
+        <li>
+            <a href="">{{ contest.title }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

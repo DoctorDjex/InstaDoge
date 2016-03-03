@@ -80,9 +80,16 @@ class Contest
      */
     private $images;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="winner_id", referencedColumnName="id")
+     */
+    private $winner;
+
     public function __construct() {
         $this->images = new ArrayCollection();
     }
+
 
     /**
      * @return \Datetime
@@ -210,6 +217,22 @@ class Contest
         $this->slug = $slug;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @param mixed $winner
+     */
+    public function setWinner($winner)
+    {
+        $this->winner = $winner;
+    }
+
     public function countAllVotes(){
         $count = 0;
 
@@ -233,21 +256,5 @@ class Contest
 
     public function __toString() {
         return $this->title;
-    }
-
-    public function getWinner() {
-        if( empty( $this->images ) ){
-            return false;
-        }
-
-        $winner = $this->images[0];
-
-        foreach( $this->images as $image ){
-            if( count( $image->getVotes() > $winner->getVotes() ) ){
-                $winner = $image;
-            }
-        }
-
-        return $winner;
     }
 }

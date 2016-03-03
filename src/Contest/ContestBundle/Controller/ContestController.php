@@ -108,10 +108,14 @@ class ContestController extends Controller
     }
 
     /**
-     * @Route("/search/contest", name="contest_search_contest")
+     * @Route("/set-winner/", name="contest_set_winner")
      * @Template()
      */
-    public function searchAction(Request $request){
+    public function setWinnerAction(){
+        $user = $this->getUser();
+
+        $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesByOwner($user->getId());
+        return [ 'contests' => $contests ];
 
     }
 }

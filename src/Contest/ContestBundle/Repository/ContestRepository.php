@@ -51,4 +51,17 @@ class ContestRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function findActivesByOwner($owner){
+        $date = new \DateTime;
+        $qb = $this->createQueryBuilder('c')
+            ->andWhere('c.endDate < :date')
+            ->andWhere('c.owner = :owner')
+            ->andWhere('c.winner is NULL');
+
+        $qb->setParameter('date', $date->format('Y-m-d'));
+        $qb->setParameter('owner', $owner);
+
+        return $qb->getQuery()->getResult();
+    }
 }
