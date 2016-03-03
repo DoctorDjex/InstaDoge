@@ -63,14 +63,8 @@ class ProfileController extends BaseController
      * @Template()
      */
     public function userVotesAction(){
-
         $user = $this->container->get('security.context')->getToken()->getUser();
         $votes = $user->getVotes();
-
-        $contest = array();
-        foreach($votes as $vote){;
-            $contest[] = $vote->getContest();
-        }
         return array('votes' => $votes);
     }
 }
