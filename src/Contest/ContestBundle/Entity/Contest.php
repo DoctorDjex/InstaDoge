@@ -82,6 +82,7 @@ class Contest
 
     public function __construct() {
         $this->images = new ArrayCollection();
+        $this->cont = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -250,4 +251,11 @@ class Contest
 
         return $winner;
     }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="conts", cascade={"remove"})
+     * @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     */
+    protected $cats;
+
 }
