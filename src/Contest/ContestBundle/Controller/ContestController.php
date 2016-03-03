@@ -108,14 +108,30 @@ class ContestController extends Controller
     }
 
     /**
-     * @Route("/set-winner/", name="contest_set_winner")
+     * @Route("/set-winner", name="contest_set_winner")
      * @Template()
      */
     public function setWinnerAction(){
         $user = $this->getUser();
-
         $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesByOwner($user->getId());
         return [ 'contests' => $contests ];
+    }
+
+    /**
+     * @Route("/set-winner/{slug}", name="contest_set_winner_detail")
+     * @Template()
+     */
+    public function setWinnerDetailAction(Contest $contest){
+        $user = $this->getUser();
+
+        $this->denyAccessUnlessGranted('view', $contest);
+        //$contest->isOver() &&
+
+        /*if($user->getId()  == $contest->getOwner()->getId() ){
+
+        }*/
+
+        return [ 'contest' => $contest ];
 
     }
 }

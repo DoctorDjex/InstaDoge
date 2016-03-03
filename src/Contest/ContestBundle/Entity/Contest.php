@@ -51,7 +51,7 @@ class Contest
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="degin_date", type="datetime")
+     * @ORM\Column(name="begin_date", type="datetime")
      * @Assert\Expression("value <= this.getEndDate()", message="La date de début doit être inférieure à la date de fin.")
      */
     private $beginDate;
@@ -252,6 +252,11 @@ class Contest
         if ($this->getCreatedAt() == null) {
             $this->setCreatedAt(new \DateTime('now'));
         }
+    }
+
+    public function isOver(){
+        $now = new \DateTime('now');
+        return ($this->getEndDate()->getTimestamp() < $now->getTimestamp());
     }
 
     public function __toString() {

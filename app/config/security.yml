@@ -32,3 +32,5 @@ security:
         - { path: ^/details, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/user-votes, roles: ROLE_USER }
+        - { path: ^/set-winner, roles: ROLE_USER }
+        - { path: ^/set-winner/$, roles: ROLE_USER }
