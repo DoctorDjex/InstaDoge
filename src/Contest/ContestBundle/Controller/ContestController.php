@@ -108,30 +108,34 @@ class ContestController extends Controller
     }
 
     /**
-     * @Route("/set-winner", name="contest_set_winner")
+     * @Route("/view-winner", name="contest_view_winner")
      * @Template()
      */
-    public function setWinnerAction(){
+    public function viewWinnerAction(){
         $user = $this->getUser();
         $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesByOwner($user->getId());
         return [ 'contests' => $contests ];
     }
 
     /**
-     * @Route("/set-winner/{slug}", name="contest_set_winner_detail")
+     * @Route("/view-winner/{slug}", name="contest_view_winner_detail")
      * @Template()
      */
-    public function setWinnerDetailAction(Contest $contest){
-        $user = $this->getUser();
-
+    public function viewWinnerDetailAction(Contest $contest){
         $this->denyAccessUnlessGranted('view', $contest);
-        //$contest->isOver() &&
-
-        /*if($user->getId()  == $contest->getOwner()->getId() ){
-
-        }*/
-
-        return [ 'contest' => $contest ];
+        $over = $contest->isOver();
+        $images = $contest->getImages();
+        $winners = array();
+        $winners[] = $images[0];
+        foreach($images as $image){
+            if( count($winners[0]->getVotes()) < count($image->getVotes()) ){
+                $winners = array();
+                $winners[0] = $image;
+            }elseif(count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId() ){
+                $winners[] = $image;
+            }
+        }
+        return [ 'contest' => $contest , 'over' => $over , 'winners' => $winners ];
 
     }
 }

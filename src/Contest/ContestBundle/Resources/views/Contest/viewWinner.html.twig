@@ -5,7 +5,7 @@
     <ul>
     {% for contest in contests %}
         <li>
-            <a href="">{{ contest.title }}</a>
+            <a href="{{ url('contest_view_winner_detail', {slug: contest.slug}) }}">{{ contest.title }}</a>
         </li>
     {% endfor %}
     </ul>
