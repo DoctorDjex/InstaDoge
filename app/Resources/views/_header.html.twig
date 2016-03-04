@@ -17,7 +17,6 @@
                     <ul>
                         <li><a href="{{ url('contest_list') }}">En cours</a></li>
                         <li><a href="{{ url('contest_create_contest') }}">Créer un concours</a></li>
-                        <li><a href="{{ url('contest_view_winner') }}">Valider/Départager un gagnant</a></li>
                     </ul>
                 </li>
                 {% if not app.user %}
@@ -28,6 +27,7 @@
                         <a href="#">Connecté en tant que {{ app.user.username }}</a>
                         <ul>
                             <li><a href="{{ url('fos_user_profile_edit') }}">Mon profil</a></li>
+                            <li><a href="{{ url('contest_view_winner') }}">Valider/Départager un gagnant</a></li>
                             <li><a href="{{ url('fos_user_security_logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>
