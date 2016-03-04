@@ -3,6 +3,8 @@
 namespace Contest\ContestBundle\Controller;
 
 use Contest\ContestBundle\Entity\Contest;
+use Contest\ContestBundle\Entity\Image;
+use Contest\ContestBundle\Helper\ContestHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -124,18 +126,28 @@ class ContestController extends Controller
     public function viewWinnerDetailAction(Contest $contest){
         $this->denyAccessUnlessGranted('view', $contest);
         $over = $contest->isOver();
-        $images = $contest->getImages();
-        $winners = array();
-        $winners[] = $images[0];
-        foreach($images as $image){
-            if( count($winners[0]->getVotes()) < count($image->getVotes()) ){
-                $winners = array();
-                $winners[0] = $image;
-            }elseif(count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId() ){
-                $winners[] = $image;
-            }
-        }
+        $winners = $contest->getWinners();
         return [ 'contest' => $contest , 'over' => $over , 'winners' => $winners ];
+    }
 
+    /**
+     * @Route("/set-winner/{contest_slug}/{image_id}", name="contest_set_winner", requirements={"image_id"="\d+"})
+     * @Template()
+     *
+     * @ParamConverter("contest", class="ContestContestBundle:Contest", options={"mapping": {"contest_slug" = "slug"}})
+     * @ParamConverter("image", class="ContestContestBundle:Image", options={"mappings": {"image_id" = "id"}})
+     */
+    public function setWinnerAction( Contest $contest, Image $image){
+        $this->denyAccessUnlessGranted('view', $contest);
+        $setimage = false;
+        if( $contest->canSetWinner($image) ){
+            $setimage = true;
+            $contest->setWinner($image);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist( $contest );
+            $em->flush();
+            return $this->redirect( $this->generateUrl('contest_winner', [ 'slug' => $contest->getSlug() ] ) );
+        }
+        return [ 'setimage' => $setimage ];
     }
 }

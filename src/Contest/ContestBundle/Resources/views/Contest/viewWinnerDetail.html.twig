@@ -8,7 +8,7 @@
             {% for winner in winners %}
                 <li>
                     <img src="{{ app.request.getBaseURL() }}{{ winner.webPath }}" alt="{{ winner }}" />
-                    <a href="">{{ winner.title }}</a>
+                    <a href="{{ url('contest_set_winner', {slug: contest.slug, id: winner.id }) }}">{{ winner.title }}</a>
                 </li>
             {% endfor %}
         </ul>

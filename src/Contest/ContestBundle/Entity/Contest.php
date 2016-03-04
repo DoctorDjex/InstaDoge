@@ -262,4 +262,27 @@ class Contest
     public function __toString() {
         return $this->title;
     }
+
+    public function getWinners(){
+        $images = $this->getImages();
+        $winners = array();
+        $winners[] = $images[0];
+        foreach($images as $image){
+            if( count($winners[0]->getVotes()) < count($image->getVotes()) ){
+                $winners = array();
+                $winners[0] = $image;
+            }elseif(count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId() ){
+                $winners[] = $image;
+            }
+        }
+        return $winners;
+    }
+
+    public function canSetWinner(Image $image){
+        return $this->hasImage($image) && $this->isOver();
+    }
+
+    public function hasImage(Image $image){
+        return $this->getId() == $image->getContest()->getId();
+    }
 }
