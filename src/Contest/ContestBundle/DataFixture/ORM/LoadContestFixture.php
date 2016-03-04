@@ -4,6 +4,7 @@ namespace Contest\ContestBundle\DataFixture\ORM;
 
 use Contest\ContestBundle\Entity\Contest;
 use Contest\ContestBundle\Entity\Image;
+use Contest\ContestBundle\Entity\Category;
 use Contest\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -18,6 +19,9 @@ class LoadContestFixture implements FixtureInterface
         $user->setPassword('toto');
 
         $manager->persist($user);
+
+        $category = new Category();
+        $category->setName( "Category 1 ");
 
         $contest = new Contest();
         $contest->setTitle('Titre n°1');
@@ -40,7 +44,12 @@ class LoadContestFixture implements FixtureInterface
             $contest->addImage($image);
         }
 
-        $manager->persist($contest);
+        $contest->setCategory( $category );
+        $category->addContest( $contest );
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName( "Category 2 ");
 
         $contest = new Contest();
         $contest->setTitle('Titre n°2');
@@ -63,7 +72,12 @@ class LoadContestFixture implements FixtureInterface
             $contest->addImage($image);
         }
 
-        $manager->persist($contest);
+        $contest->setCategory( $category );
+        $category->addContest( $contest );
+        $manager->persist($category);
+
+        $category = new Category();
+        $category->setName( "Category 3 ");
 
         $contest = new Contest();
         $contest->setTitle('Titre n°3');
@@ -86,7 +100,9 @@ class LoadContestFixture implements FixtureInterface
             $contest->addImage($image);
         }
 
-        $manager->persist($contest);
+        $contest->setCategory( $category );
+        $category->addContest( $contest );
+        $manager->persist($category);
 
         $manager->flush();
     }

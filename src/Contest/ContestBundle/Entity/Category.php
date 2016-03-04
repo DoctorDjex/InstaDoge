@@ -7,7 +7,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Category
  *
- * @ORM\Table()
+ * @ORM\Table(name="category")
  * @ORM\Entity
  */
 class Category
@@ -101,4 +101,41 @@ class Category
         $this->contests = $contests;
     }
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->contests = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add contests
+     *
+     * @param \Contest\ContestBundle\Entity\Contest $contests
+     * @return Category
+     */
+    public function addContest(\Contest\ContestBundle\Entity\Contest $contests)
+    {
+        $this->contests[] = $contests;
+
+        return $this;
+    }
+
+    /**
+     * Remove contests
+     *
+     * @param \Contest\ContestBundle\Entity\Contest $contests
+     */
+    public function removeContest(\Contest\ContestBundle\Entity\Contest $contests)
+    {
+        $this->contests->removeElement($contests);
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString() {
+        return $this->name;
+    }
 }

@@ -10,3 +10,9 @@ services:
         arguments: [~, Contest\ContestBundle\Entity\Image, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Image }
+
+    admin.category:
+        class: Contest\AdminBundle\Admin\CategoryAdmin
+        arguments: [~, Contest\ContestBundle\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Category }
