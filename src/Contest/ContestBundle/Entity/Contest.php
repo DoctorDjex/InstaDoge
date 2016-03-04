@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * Contest
+ * Contest.
  *
  * @ORM\Table(name="contest")
  * @ORM\Entity(repositoryClass="Contest\ContestBundle\Repository\ContestRepository")
@@ -68,12 +68,10 @@ class Contest
      *
      * @Gedmo\Slug(fields={"title"}, updatable=false, unique=true)
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
-     *
      */
     private $slug;
 
     /**
-     *
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Image", mappedBy="contest" , cascade={"persist", "remove"})
@@ -86,57 +84,63 @@ class Contest
      */
     private $winner;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->images = new ArrayCollection();
     }
-
 
     /**
      * @return \Datetime
      */
-    public function getCreatedAt() {
+    public function getCreatedAt()
+    {
         return $this->createdAt;
     }
 
     /**
      * @param \Datetime $createdAt
      */
-    public function setCreatedAt( $createdAt ) {
+    public function setCreatedAt($createdAt)
+    {
         $this->createdAt = $createdAt;
     }
 
     /**
      * @return \Datetime
      */
-    public function getBeginDate() {
+    public function getBeginDate()
+    {
         return $this->beginDate;
     }
 
     /**
      * @param \Datetime $beginDate
      */
-    public function setBeginDate( $beginDate ) {
+    public function setBeginDate($beginDate)
+    {
         $this->beginDate = $beginDate;
     }
 
     /**
      * @return \Datetime
      */
-    public function getEndDate() {
+    public function getEndDate()
+    {
         return $this->endDate;
     }
 
     /**
      * @param \Datetime $endDate
      */
-    public function setEndDate( $endDate ) {
+    public function setEndDate($endDate)
+    {
         $this->endDate = $endDate;
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -144,9 +148,10 @@ class Contest
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Contest
      */
     public function setTitle($title)
@@ -157,9 +162,9 @@ class Contest
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -167,9 +172,10 @@ class Contest
     }
 
     /**
-     * Set owner
+     * Set owner.
      *
      * @param string $owner
+     *
      * @return Contest
      */
     public function setOwner($owner)
@@ -180,9 +186,9 @@ class Contest
     }
 
     /**
-     * Get owner
+     * Get owner.
      *
-     * @return string 
+     * @return string
      */
     public function getOwner()
     {
@@ -192,28 +198,32 @@ class Contest
     /**
      * @return mixed
      */
-    public function getImages() {
+    public function getImages()
+    {
         return $this->images;
     }
 
     /**
      * @param mixed $images
      */
-    public function setImages( $images ) {
+    public function setImages($images)
+    {
         $this->images = $images;
     }
 
     /**
      * @return string
      */
-    public function getSlug() {
+    public function getSlug()
+    {
         return $this->slug;
     }
 
     /**
      * @param string $slug
      */
-    public function setSlug( $slug ) {
+    public function setSlug($slug)
+    {
         $this->slug = $slug;
     }
 
@@ -233,18 +243,18 @@ class Contest
         $this->winner = $winner;
     }
 
-    public function countAllVotes(){
+    public function countAllVotes()
+    {
         $count = 0;
 
-        foreach( $this->images as $image ){
-            $count += count( $image->getVotes() );
+        foreach ($this->images as $image) {
+            $count += count($image->getVotes());
         }
 
         return $count;
     }
 
     /**
-     *
      * @ORM\PrePersist
      */
     public function setCreatedAtValue()
@@ -254,42 +264,50 @@ class Contest
         }
     }
 
-    public function isOver(){
+    public function isOver()
+    {
         $now = new \DateTime('now');
-        return ($this->getEndDate()->getTimestamp() < $now->getTimestamp());
+
+        return $this->getEndDate()->getTimestamp() < $now->getTimestamp();
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->title;
     }
 
-    public function getWinners(){
+    public function getWinners()
+    {
         $images = $this->getImages();
         $winners = array();
         $winners[] = $images[0];
-        foreach($images as $image){
-            if( count($winners[0]->getVotes()) < count($image->getVotes()) ){
+        foreach ($images as $image) {
+            if (count($winners[0]->getVotes()) < count($image->getVotes())) {
                 $winners = array();
                 $winners[0] = $image;
-            }elseif(count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId() ){
+            } elseif (count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId()) {
                 $winners[] = $image;
             }
         }
+
         return $winners;
     }
 
-    public function canSetWinner(Image $image){
+    public function canSetWinner(Image $image)
+    {
         return $this->hasImage($image) && $this->isOver();
     }
 
-    public function hasImage(Image $image){
+    public function hasImage(Image $image)
+    {
         return $this->getId() == $image->getContest()->getId();
     }
 
     /**
-     * Add images
+     * Add images.
      *
      * @param \Contest\ContestBundle\Entity\Image $images
+     *
      * @return Contest
      */
     public function addImage(\Contest\ContestBundle\Entity\Image $images)
@@ -300,7 +318,7 @@ class Contest
     }
 
     /**
-     * Remove images
+     * Remove images.
      *
      * @param \Contest\ContestBundle\Entity\Image $images
      */

@@ -8,13 +8,14 @@ use Contest\UserBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadContestFixture implements FixtureInterface{
-    function load(ObjectManager $manager)
+class LoadContestFixture implements FixtureInterface
+{
+    public function load(ObjectManager $manager)
     {
         $user = new User();
         $user->setUsername('TUser 1');
         $user->setEmail('tuser1@mail.com');
-        $user->setPassword("toto");
+        $user->setPassword('toto');
 
         $manager->persist($user);
 
@@ -28,15 +29,15 @@ class LoadContestFixture implements FixtureInterface{
 
         $contest->setBeginDate($beginDate);
         $contest->setEndDate($endDate);
-        $contest->setOwner( $user );
+        $contest->setOwner($user);
 
-        for( $i = 1; $i < 4; $i++ ){
+        for ($i = 1; $i < 4; ++$i) {
             $image = new Image();
-            $image->setTitle( "Title image contest 1 image " . $i );
-            $image->setDescription( "Description image contest 1 image " . $i );
-            $image->setPath("test/image" . $i . "jpeg");
+            $image->setTitle('Title image contest 1 image '.$i);
+            $image->setDescription('Description image contest 1 image '.$i);
+            $image->setPath('test/image'.$i.'jpeg');
 
-            $contest->addImage( $image );
+            $contest->addImage($image);
         }
 
         $manager->persist($contest);
@@ -51,15 +52,15 @@ class LoadContestFixture implements FixtureInterface{
 
         $contest->setBeginDate($beginDate);
         $contest->setEndDate($endDate);
-        $contest->setOwner( $user );
+        $contest->setOwner($user);
 
-        for( $i = 1; $i < 4; $i++ ){
+        for ($i = 1; $i < 4; ++$i) {
             $image = new Image();
-            $image->setTitle( "Title image contest 2 image " . $i );
-            $image->setDescription( "Description image contest 2 image " . $i );
-            $image->setPath("test/image" . $i . "jpeg");
+            $image->setTitle('Title image contest 2 image '.$i);
+            $image->setDescription('Description image contest 2 image '.$i);
+            $image->setPath('test/image'.$i.'jpeg');
 
-            $contest->addImage( $image );
+            $contest->addImage($image);
         }
 
         $manager->persist($contest);
@@ -74,15 +75,15 @@ class LoadContestFixture implements FixtureInterface{
 
         $contest->setBeginDate($beginDate);
         $contest->setEndDate($endDate);
-        $contest->setOwner( $user );
+        $contest->setOwner($user);
 
-        for( $i = 1; $i < 4; $i++ ){
+        for ($i = 1; $i < 4; ++$i) {
             $image = new Image();
-            $image->setTitle( "Title image contest 3 image " . $i );
-            $image->setDescription( "Description image contest 3 image " . $i );
-            $image->setPath("test/image" . $i . "jpeg");
+            $image->setTitle('Title image contest 3 image '.$i);
+            $image->setDescription('Description image contest 3 image '.$i);
+            $image->setPath('test/image'.$i.'jpeg');
 
-            $contest->addImage( $image );
+            $contest->addImage($image);
         }
 
         $manager->persist($contest);

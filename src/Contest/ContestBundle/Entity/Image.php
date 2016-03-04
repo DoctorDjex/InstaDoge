@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Image
+ * Image.
  *
  * @ORM\Table(name="image")
  * @ORM\Entity(repositoryClass="Contest\ContestBundle\Repository\ImageRepository")
@@ -50,7 +50,6 @@ class Image
     private $path;
 
     /**
-     *
      * @var Contest
      *
      * @ORM\ManyToOne(targetEntity="Contest", inversedBy="images")
@@ -86,14 +85,15 @@ class Image
     /**
      * Image constructor.
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->votes = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer 
+     * @return int
      */
     public function getId()
     {
@@ -101,9 +101,10 @@ class Image
     }
 
     /**
-     * Set title
+     * Set title.
      *
      * @param string $title
+     *
      * @return Image
      */
     public function setTitle($title)
@@ -114,9 +115,9 @@ class Image
     }
 
     /**
-     * Get title
+     * Get title.
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -124,9 +125,10 @@ class Image
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
+     *
      * @return Image
      */
     public function setDescription($description)
@@ -137,9 +139,9 @@ class Image
     }
 
     /**
-     * Get description
+     * Get description.
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -147,9 +149,10 @@ class Image
     }
 
     /**
-     * Set path
+     * Set path.
      *
      * @param string $path
+     *
      * @return Image
      */
     public function setPath($path)
@@ -160,9 +163,9 @@ class Image
     }
 
     /**
-     * Get path
+     * Get path.
      *
-     * @return string 
+     * @return string
      */
     public function getPath()
     {
@@ -172,21 +175,24 @@ class Image
     /**
      * @return mixed
      */
-    public function getContest() {
+    public function getContest()
+    {
         return $this->contest;
     }
 
     /**
      * @param mixed $contest
      */
-    public function setContest( $contest ) {
+    public function setContest($contest)
+    {
         $this->contest = $contest;
     }
 
     /**
-     * Set owner
+     * Set owner.
      *
      * @param User $owner
+     *
      * @return Contest
      */
     public function setOwner(User $owner)
@@ -197,7 +203,7 @@ class Image
     }
 
     /**
-     * Get owner
+     * Get owner.
      *
      * @return User
      */
@@ -209,14 +215,16 @@ class Image
     /**
      * @return mixed
      */
-    public function getVotes() {
+    public function getVotes()
+    {
         return $this->votes;
     }
 
     /**
      * @param mixed $votes
      */
-    public function setVotes( $votes ) {
+    public function setVotes($votes)
+    {
         $this->votes = $votes;
     }
 
@@ -317,7 +325,8 @@ class Image
         $this->file = null;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->title;
     }
 }

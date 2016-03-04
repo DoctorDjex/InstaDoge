@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
  * Created by PhpStorm.
  * User: Guillaume
  * Date: 02/03/2016
- * Time: 10:17
+ * Time: 10:17.
  */
 class ContestHandler
 {
@@ -26,12 +26,12 @@ class ContestHandler
 
     public function process(FormInterface $form, Contest $contest)
     {
-        $form->setData( $contest );
+        $form->setData($contest);
 
         $form->handleRequest($this->request);
 
         if ($form->isValid()) {
-            $this->onSuccess( $contest );
+            $this->onSuccess($contest);
 
             return true;
         }

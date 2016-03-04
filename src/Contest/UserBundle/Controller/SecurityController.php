@@ -3,15 +3,16 @@
  * Created by PhpStorm.
  * User: Guillaume
  * Date: 01/03/2016
- * Time: 15:52
+ * Time: 15:52.
  */
 
 namespace Contest\UserBundle\Controller;
 
 use FOS\UserBundle\Controller\SecurityController as BaseController;
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Security\Core\Security;
-class SecurityController extends BaseController{
+
+class SecurityController extends BaseController
+{
     public function loginAction()
     {
         $request = $this->container->get('request');
@@ -40,7 +41,7 @@ class SecurityController extends BaseController{
 
         return $this->renderLogin(array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
             'csrf_token' => $csrfToken,
         ));
     }
