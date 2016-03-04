@@ -15,29 +15,35 @@ class ContestType extends AbstractType {
      * @param array                $options
      */
     public function buildForm( FormBuilderInterface $builder, array $options ) {
-        $builder
-            ->add( 'title' )
-            ->add( 'beginDate', 'datetimepicker', ['attr' => ['label' => 'Date de début'] ] )
-            ->add( 'endDate', 'datetimepicker', ['attr' => ['label' => 'Date de fin'] ] )
-            ->add('category', EntityType::class,array(
-                'class' => 'Contest\ContestBundle\Entity\Category',
-                'choice_label'=>'name',
-            ))
+
+        $builder->add( 'title' )
+            ->add( 'beginDate', 'datetimepicker',
+                [ 'attr'            => [ 'label' => 'Date de début' ],
+                  'invalid_message' => 'La date de début n\'est pas valide !', ] )
+            ->add( 'endDate', 'datetimepicker',
+                [ 'attr'            => [ 'label' => 'Date de fin' ],
+                  'invalid_message' => 'La date de fin n\'est pas valide !', ] )
+            ->add( 'category', EntityType::class, [
+                'class'        => 'Contest\ContestBundle\Entity\Category',
+                'choice_label' => 'name',
+            ] )
             ->add( 'Créer mon concours', 'submit' );
 
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener( FormEvents::POST_SUBMIT, function ( FormEvent $event ) {
             $contest = $event->getData();
 
-            if( is_array( $contest->getBeginDate()) ){
-                $contest->setBeginDate( $contest->getBeginDate()['date'] );
+            $beginDate = $contest->getBeginDate();
+            if ( is_array( $beginDate ) && isset( $beginDate['date'] ) ) {
+                $contest->setBeginDate( $beginDate['date'] );
             }
 
-            if( is_array( $contest->getEndDate()) ){
-                $contest->setEndDate( $contest->getEndDate()['date'] );
+            $endDate = $contest->getEndDate();
+            if ( is_array( $endDate ) && isset( $endDate['date'] ) ) {
+                $contest->setEndDate( $endDate['date'] );
             }
 
             $event->setData( $contest );
-        });
+        } );
     }
 
     /**
@@ -45,7 +51,7 @@ class ContestType extends AbstractType {
      */
     public function setDefaultOptions( OptionsResolverInterface $resolver ) {
         $resolver->setDefaults( [
-            'data_class' => 'Contest\ContestBundle\Entity\Contest'
+            'data_class' => 'Contest\ContestBundle\Entity\Contest',
         ] );
     }
 

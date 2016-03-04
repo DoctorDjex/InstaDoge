@@ -13,23 +13,24 @@ use Symfony\Component\HttpFoundation\Request;
 class ImageController extends Controller
 {
     /**
-     * @Route("/{slug}/upload/image", name="contest_image_upload")
+     * @Route("/upload/image/{slug}", name="contest_image_upload")
      * @Template()
      * @ParamConverter()
      */
-    public function uploadImageAction(Request $request, Contest $contest) {
+    public function uploadImageAction(Request $request, Contest $contest)
+    {
         $image = new Image();
         $form = $this->createForm('image_type', $image);
 
-        $viewVars = [ "contest" => $contest ];
+        $viewVars = ['contest' => $contest];
 
-        if( $request->getMethod() == "POST" ){
-            $form->handleRequest( $request );
+        if ($request->getMethod() == 'POST') {
+            $form->handleRequest($request);
 
-            if( $form->isValid() ){
-                $image->setContest( $contest );
+            if ($form->isValid()) {
+                $image->setContest($contest);
                 $em = $this->getDoctrine()->getManager();
-                $em->persist( $image );
+                $em->persist($image);
                 $em->flush();
 
                 $viewVars['error'] = false;
@@ -39,11 +40,12 @@ class ImageController extends Controller
         }
 
         $viewVars['form'] = $form->createView();
+
         return $viewVars;
     }
 
     /**
-     * @param Image   $image
+     * @param Image $image
      *
      * @return array
      *
@@ -51,11 +53,12 @@ class ImageController extends Controller
      * @ParamConverter()
      * @Template()
      */
-    public function voteAction(Image $image){
-        $viewVars = [ 'image' => $image ];
+    public function voteAction(Image $image)
+    {
+        $viewVars = ['image' => $image];
 
-        if( !$this->getUser()->hadAlreadyVoted( $image ) ){
-            $image->addVote( $this->getUser() );
+        if (!$this->getUser()->hadAlreadyVoted($image)) {
+            $image->addVote($this->getUser());
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($image);
@@ -66,5 +69,4 @@ class ImageController extends Controller
 
         return $viewVars;
     }
-
 }

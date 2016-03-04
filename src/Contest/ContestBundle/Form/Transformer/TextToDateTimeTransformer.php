@@ -10,7 +10,8 @@ class TextToDateTimeTransformer implements DataTransformerInterface
     /**
      * Transforms an object (Datetime) to a string.
      *
-     * @param  \Datetime|null $date
+     * @param \Datetime|null $date
+     *
      * @return string
      */
     public function transform($date)
@@ -25,8 +26,10 @@ class TextToDateTimeTransformer implements DataTransformerInterface
     /**
      * Transforms a string (number) to an object (issue).
      *
-     * @param  string $stringDate
+     * @param string $stringDate
+     *
      * @return \Datetime|null
+     *
      * @throws TransformationFailedException if object (issue) is not found.
      */
     public function reverseTransform($stringDate)
@@ -36,14 +39,14 @@ class TextToDateTimeTransformer implements DataTransformerInterface
             return;
         }
 
-        $date = \Datetime::createFromFormat( 'Y-m-d H:i:s', $stringDate);
+        $date = \Datetime::createFromFormat('Y-m-d H:i:s', $stringDate);
 
-        if (null === $date) {
+        if (!$date) {
             // causes a validation error
             // this message is not shown to the user
             // see the invalid_message option
             throw new TransformationFailedException(sprintf(
-                'String %s is not a valid date!',
+                '%s n\'est pas une date valide !',
                 $stringDate
             ));
         }

@@ -10,7 +10,7 @@ class ImageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -18,17 +18,17 @@ class ImageType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('file', 'file')
-            ->add('Ajouter', 'submit', [ 'attr' => [ 'value' => 'Ajouter ma photo !' ] ] )
+            ->add('Ajouter', 'submit', ['attr' => ['value' => 'Ajouter ma photo !']])
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Contest\ContestBundle\Entity\Image'
+            'data_class' => 'Contest\ContestBundle\Entity\Image',
         ));
     }
 

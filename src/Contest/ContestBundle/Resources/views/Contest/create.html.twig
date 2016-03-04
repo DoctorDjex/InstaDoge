@@ -1,4 +1,4 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
 {% form_theme form 'ContestContestBundle:Form:contest_custom_fields.html.twig' %}
 
@@ -20,27 +20,26 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/contestcontest/css/jquery.datetimepicker.css') }}" />
-
 {% endblock %}
 
-{% block content %}
-    <div class="container">
-        <div id="content">
-            <a href="{{ url('contest_list') }}"><< Retourner à la liste des concours</a>
-            <h1>Créer un concours</h1>
-            {% if error is defined and not error %}
-                Le concours a été créé !
-            {% endif %}
+{% block full_content %}
+    <a href="{{ url('contest_list') }}"><< Retourner à la liste des concours</a>
+    <h1>Créer un concours</h1>
+    {% if error is defined and not error %}
+        Le concours a été créé !
+    {% else %}
+        <p id="error">
+            {{ form_errors(form) }}
+        </p>
+    {% endif %}
 
 
-            {{ form_start(form) }}
+    {{ form_start(form) }}
 
-            {{ form_row(form.title) }}
-            {{ form_label(form.beginDate, 'Date début') }}
-            {{ form_widget(form.beginDate) }}
-            {{ form_label(form.endDate, 'Date fin') }}
-            {{ form_widget(form.endDate) }}
-            {{ form_end(form) }}
-        </div>
-    </div>
+    {{ form_row(form.title) }}
+    {{ form_label(form.beginDate, 'Date début') }}
+    {{ form_widget(form.beginDate) }}
+    {{ form_label(form.endDate, 'Date fin') }}
+    {{ form_widget(form.endDate) }}
+    {{ form_end(form) }}
 {% endblock %}

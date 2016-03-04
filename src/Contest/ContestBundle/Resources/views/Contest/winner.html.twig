@@ -1,18 +1,11 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
-{% block content %}
-    <!-- Main -->
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                {% if winnerImage is defined %}
-                    <p>L'image gagnante a été postée par : {{ winnerImage.owner.email }}</p>
-                    <img src="{{ winnerImage.webPath }}" alt="{{ winnerImage }}" />
-                    <p>Félicitations !</p>
-                {% else %}
-                    Le concours n'est pas terminé !
-                {% endif %}
-            </div>
-        </div>
-    </div>
+{% block full_content %}
+    {% if winnerImage is defined %}
+        <p>L'image gagnante a été postée par : {{ winnerImage.owner.email }}</p>
+        <img src="{{ app.request.getBaseURL() }}{{ winnerImage.webPath }}" alt="{{ winnerImage }}" />
+        <p>Félicitations !</p>
+    {% else %}
+        Le concours n'est pas terminé !
+    {% endif %}
 {% endblock %}

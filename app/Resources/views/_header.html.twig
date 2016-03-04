@@ -24,12 +24,14 @@
 
                 </li>
                 {% if not app.user %}
+                    <li><a href="{{ url('fos_user_registration_register') }}">S'enregistrer</a></li>
                     <li><a href="{{ url('fos_user_security_login') }}">Connexion</a></li>
                 {% else %}
                     <li>
                         <a href="#">Connecté en tant que {{ app.user.username }}</a>
                         <ul>
                             <li><a href="{{ url('fos_user_profile_edit') }}">Mon profil</a></li>
+                            <li><a href="{{ url('contest_view_winner') }}">Valider/Départager un gagnant</a></li>
                             <li><a href="{{ url('fos_user_security_logout') }}">Déconnexion</a></li>
                         </ul>
                     </li>
@@ -38,4 +40,3 @@
         </nav>
     </header>
 </div>
-

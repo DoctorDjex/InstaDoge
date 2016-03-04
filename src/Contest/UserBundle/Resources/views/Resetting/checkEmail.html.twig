@@ -1,0 +1,7 @@
+{% extends "::without_sidebar.html.twig" %}
+
+{% block full_content %}
+<p>
+{{ 'resetting.check_email'|trans({'%email%': email}, 'FOSUserBundle') }}
+</p>
+{% endblock %}

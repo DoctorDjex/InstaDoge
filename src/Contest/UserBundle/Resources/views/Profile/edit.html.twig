@@ -1,12 +1,4 @@
-{% extends "::base.html.twig" %}
-
-{% block content %}
-    <!-- Main -->
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
-            </div>
-        </div>
-    </div>
+{% extends "::without_sidebar.html.twig" %}
+{% block full_content %}
+    {% include "FOSUserBundle:Profile:edit_content.html.twig" %}
 {% endblock %}

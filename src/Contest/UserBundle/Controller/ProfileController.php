@@ -11,21 +11,22 @@
 
 namespace Contest\UserBundle\Controller;
 
-use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Controller\ProfileController as BaseController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
- * Controller managing the user profile
+ * Controller managing the user profile.
  *
  * @author Christophe Coevoet <stof@notk.org>
  */
 class ProfileController extends BaseController
 {
     /**
-     * Edit the user
+     * Edit the user.
      */
     public function editAction()
     {
@@ -53,5 +54,17 @@ class ProfileController extends BaseController
     protected function getRedirectionUrl(UserInterface $user)
     {
         return $this->container->get('router')->generate('fos_user_profile_edit');
+    }
+
+    /**
+     * @Route("/user-votes", name="user_votes")
+     * @Template()
+     */
+    public function userVotesAction()
+    {
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        $votes = $user->getVotes();
+
+        return array('votes' => $votes);
     }
 }

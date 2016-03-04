@@ -1,26 +1,18 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
-{% block title %}ContestContestBundle:Image:uploadImage{% endblock %}
+{% block full_content %}
+    <a href="{{ url('contest_gallery', {slug: contest.slug}) }}"><< Retourner à la gallerie</a>
+    <h1>Ajouter une Photo</h1>
+    {% if error is defined and not error %}
+        L'image a été envoyée !
+    {% endif %}
 
-{% block content %}
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                <a href="{{ url('contest_gallery', {slug: contest.slug}) }}"><< Retourner à la gallerie</a>
-                <h1>Ajouter une Photo</h1>
-                {% if error is defined and not error %}
-                    L'image a été envoyée !
-                {% endif %}
+    {{ form_start(form) }}
 
-                {{ form_start(form) }}
-
-                {{ form_row(form.title) }}
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
-                {{ form_label(form.file, "Image") }}
-                {{ form_widget(form.file) }}
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>
+    {{ form_row(form.title) }}
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description) }}
+    {{ form_label(form.file, "Image") }}
+    {{ form_widget(form.file) }}
+    {{ form_end(form) }}
 {% endblock %}
