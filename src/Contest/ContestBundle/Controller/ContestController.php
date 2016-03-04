@@ -133,7 +133,6 @@ class ContestController extends Controller
     /**
      * @Route("/set-winner/{contest_slug}/{image_id}", name="contest_set_winner", requirements={"image_id"="\d+"})
      * @Template()
-     *
      * @ParamConverter("contest", class="ContestContestBundle:Contest", options={"mapping": {"contest_slug" = "slug"}})
      * @ParamConverter("image", class="ContestContestBundle:Image", options={"mappings": {"image_id" = "id"}})
      */
