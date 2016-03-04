@@ -1,35 +1,27 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
-{% block title %}ContestContestBundle:Contest:details{% endblock %}
+{% block full_content %}
+    <center><a href="{{ url('contest_image_upload', {slug: contest.slug}) }}">Envoyer une photo</a></center>
+    <h1>Le concours : {{ contest }}</h1>
+    {% for image in contest.images if image is defined %}
+        <div class="image-container">
+            <img src="{{ app.request.getBaseURL() }}{{ image.webPath }}" alt="{{ image }}" />
+            <div class="image-description">
+                <p>
+                    Titre : {{ image }}<br />
+                    Par : {{ image.owner.username }}<br />
+                    Description :<br/>
+                    {{ image.description }}<br />
 
-{% block content %}
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                <center><a href="{{ url('contest_image_upload', {slug: contest.slug}) }}">Envoyer une photo</a></center>
-                <h1>Le concours : {{ contest }}</h1>
-                {% for image in contest.images if image is defined %}
-                    <div class="image-container">
-                        <img src="{{ image.webPath }}" alt="{{ image }}" />
-                        <div class="image-description">
-                            <p>
-                                Titre : {{ image }}<br />
-                                Par : {{ image.owner.username }}<br />
-                                Description :<br/>
-                                {{ image.description }}<br />
-
-                                {% if not app.user.hadAlreadyVoted(image) %}
-                                <a href="{{ url('contest_image_vote', {id: image.id}) }}">Je vote !</a>
-                                {% else %}
-                                    <p>Vous avez déjà voté pour cette photo.</p>
-                                {% endif %}
-                            </p>
-                        </div>
-                    </div>
-                {% else %}
-                    Il n'y a pas de photo pour le moment.
-                {% endfor %}
+                    {% if not app.user.hadAlreadyVoted(image) %}
+                    <a href="{{ url('contest_image_vote', {id: image.id}) }}">Je vote !</a>
+                    {% else %}
+                <p>Vous avez déjà voté pour cette photo.</p>
+                {% endif %}
+                </p>
             </div>
         </div>
-    </div>
+    {% else %}
+        Il n'y a pas de photo pour le moment.
+    {% endfor %}
 {% endblock %}

@@ -1,0 +1,3 @@
+user_votes:
+    resource: "@ContestUserBundle/Controller/"
+    type:     annotation

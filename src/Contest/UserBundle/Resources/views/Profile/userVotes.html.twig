@@ -1,0 +1,23 @@
+{% extends "::base.html.twig" %}
+
+{% block content %}
+    <!-- Main -->
+    <div id="main-wrapper">
+        <div class="container">
+            <div id="content">
+                <h1>Vos votes sur chaque concours</h1>
+                <h2>Libre à vous de changer votre vote en retournant sur les galleries des concours concernés !</h2>
+                <ul>
+                    {% for vote in votes %}
+                        <li>
+                            <b>{{ vote.contest.title }}</b><br />
+                            {{ vote.title }}<br />
+                            <img src="{{ app.request.getBaseURL() }}{{ vote.webPath }}" alt="">
+                            Vous n'êtes pas sur de votre vote ? Retournez faire un tour dans la <a href="{{ url('contest_gallery', {slug: vote.contest.slug}) }}">gallerie !</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
