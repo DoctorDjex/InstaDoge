@@ -38,12 +38,12 @@ class TextToDateTimeTransformer implements DataTransformerInterface
 
         $date = \Datetime::createFromFormat( 'Y-m-d H:i:s', $stringDate);
 
-        if (null === $date) {
+        if ( !$date ) {
             // causes a validation error
             // this message is not shown to the user
             // see the invalid_message option
             throw new TransformationFailedException(sprintf(
-                'String %s is not a valid date!',
+                '%s n\'est pas une date valide !',
                 $stringDate
             ));
         }

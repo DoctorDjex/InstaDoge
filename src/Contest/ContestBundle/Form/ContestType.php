@@ -16,23 +16,29 @@ class ContestType extends AbstractType {
     public function buildForm( FormBuilderInterface $builder, array $options ) {
         $builder
             ->add( 'title' )
-            ->add( 'beginDate', 'datetimepicker', ['attr' => ['label' => 'Date de début'] ] )
-            ->add( 'endDate', 'datetimepicker', ['attr' => ['label' => 'Date de fin'] ] )
+            ->add( 'beginDate', 'datetimepicker',
+                [ 'attr' => [ 'label' => 'Date de début' ],
+                  'invalid_message' => 'La date de début n\'est pas valide !' ] )
+            ->add( 'endDate', 'datetimepicker',
+                [ 'attr' => [ 'label' => 'Date de fin' ],
+                  'invalid_message' => 'La date de fin n\'est pas valide !' ] )
             ->add( 'Créer mon concours', 'submit' );
 
-        $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
+        $builder->addEventListener( FormEvents::POST_SUBMIT, function ( FormEvent $event ) {
             $contest = $event->getData();
 
-            if( is_array( $contest->getBeginDate()) ){
-                $contest->setBeginDate( $contest->getBeginDate()['date'] );
+            $beginDate = $contest->getBeginDate();
+            if ( is_array( $beginDate ) && isset( $beginDate['date'] ) ) {
+                $contest->setBeginDate( $beginDate['date'] );
             }
 
-            if( is_array( $contest->getEndDate()) ){
-                $contest->setEndDate( $contest->getEndDate()['date'] );
+            $endDate = $contest->getEndDate();
+            if ( is_array( $endDate ) && isset( $endDate['date'] ) ) {
+                $contest->setEndDate( $endDate['date'] );
             }
 
             $event->setData( $contest );
-        });
+        } );
     }
 
     /**

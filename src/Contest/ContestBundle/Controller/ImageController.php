@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ImageController extends Controller
 {
     /**
-     * @Route("/{slug}/upload/image", name="contest_image_upload")
+     * @Route("/upload/image/{slug}", name="contest_image_upload")
      * @Template()
      * @ParamConverter()
      */

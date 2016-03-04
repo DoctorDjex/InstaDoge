@@ -32,7 +32,7 @@ class ContestController extends Controller
             );
             $titrepage = 'Résultats de la recherche pour "' . $data['search'] . '"';
         }else{
-            $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActives();
+            $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesQb();
             $paginator = $this->get('knp_paginator');
             $pagination = $paginator->paginate(
                 $contests, /* query NOT result */

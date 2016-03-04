@@ -32,3 +32,5 @@ security:
         - { path: ^/details, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/user-votes, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/vote, roles: IS_AUTHENTICATED_REMEMBERED }
+        - { path: ^/upload/image, roles: IS_AUTHENTICATED_REMEMBERED }
