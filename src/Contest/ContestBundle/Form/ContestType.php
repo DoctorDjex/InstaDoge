@@ -2,6 +2,7 @@
 
 namespace Contest\ContestBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -18,6 +19,10 @@ class ContestType extends AbstractType {
             ->add( 'title' )
             ->add( 'beginDate', 'datetimepicker', ['attr' => ['label' => 'Date de début'] ] )
             ->add( 'endDate', 'datetimepicker', ['attr' => ['label' => 'Date de fin'] ] )
+            ->add('category', EntityType::class,array(
+                'class' => 'Contest\ContestBundle\Entity\Category',
+                'choice_label'=>'name',
+            ))
             ->add( 'Créer mon concours', 'submit' );
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {

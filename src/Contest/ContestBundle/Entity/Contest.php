@@ -80,6 +80,12 @@ class Contest
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="contests", cascade={"remove"})
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+
     public function __construct() {
         $this->images = new ArrayCollection();
         $this->cont = new \Doctrine\Common\Collections\ArrayCollection();
@@ -253,9 +259,19 @@ class Contest
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="conts", cascade={"remove"})
-     * @ORM\JoinColumn(name="cat_id", referencedColumnName="id")
+     * @return mixed
      */
-    protected $cats;
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
 
 }

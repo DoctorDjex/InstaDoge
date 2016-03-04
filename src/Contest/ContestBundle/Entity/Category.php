@@ -3,7 +3,7 @@
 namespace Contest\ContestBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Category
  *
@@ -21,28 +21,38 @@ class Category
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Animaux", type="string", length=255)
-     */
-    private $animaux;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Hightech", type="string", length=255)
+     * @ORM\Column(name="name", type="string" , length=255)
      */
-    private $hightech;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="Paysages", type="string", length=255)
+     * @Gedmo\Slug(fields={"name"}, updatable=false, unique=true)
+     * @ORM\Column(name="slug", type="string", length=255, unique=true)
+     *
      */
-    private $paysages;
+    private $slug;
 
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
 
+    /**
+     * @param string $slug
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    }
     /**
      * Get id
      *
@@ -53,81 +63,42 @@ class Category
         return $this->id;
     }
 
-    /**
-     * Set animaux
-     *
-     * @param string $animaux
-     * @return Category
-     */
-    public function setAnimaux($animaux)
-    {
-        $this->animaux = $animaux;
 
-        return $this;
+    /**
+     * @ORM\OneToMany(targetEntity="Contest", mappedBy="category", cascade={"remove", "persist"})
+     */
+    protected $contests;
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
-     * Get animaux
-     *
-     * @return string 
+     * @param string $name
      */
-    public function getAnimaux()
+    public function setName($name)
     {
-        return $this->animaux;
+        $this->name = $name;
     }
 
     /**
-     * Set hightech
-     *
-     * @param string $Hightech
-     * @return Category
+     * @return mixed
      */
-    public function setHighTech($Hightech)
+    public function getContests()
     {
-        $this->hightech = $Hightech;
-
-        return $this;
+        return $this->contests;
     }
 
     /**
-     * Get hightech
-     *
-     * @return string 
+     * @param mixed $contests
      */
-    public function getHightech()
+    public function setContests($contests)
     {
-        return $this->hightech;
+        $this->contests = $contests;
     }
-
-    /**
-     * Set paysages
-     *
-     * @param string $paysages
-     * @return Category
-     */
-    public function setPaysages($paysages)
-    {
-        $this->paysages = $paysages;
-
-        return $this;
-    }
-
-    /**
-     * Get paysages
-     *
-     * @return string 
-     */
-    public function getPaysages()
-    {
-        return $this->paysages;
-    }
-
-    private $categories;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Contest", mappedBy="cats", cascade={"remove", "persist"})
-     */
-    protected $conts;
-
 
 }

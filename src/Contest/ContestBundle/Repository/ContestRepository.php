@@ -19,7 +19,7 @@ class ContestRepository extends EntityRepository
             ->andWhere('c.beginDate <= :date')
             ->andWhere('c.endDate > :date');
 
-        $qb->setParameter('date', $date->format('Y-m-d'));
+        $qb->setParameter('date', $date->format('Y-m-d H:i:s'));
 
         return $qb->getQuery()->getResult();
     }
