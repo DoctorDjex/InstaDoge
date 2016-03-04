@@ -1,0 +1,20 @@
+{% extends '::without_sidebar.html.twig' %}
+{% block full_content %}
+    {% if over == false %}
+        <h2>Ce concours n'est pas encore terminé, merci de revenir plus tard !</h2>
+    {% elseif winners|length > 1 %}
+        <h2>Les gagnants à départager !</h2>
+        <ul>
+            {% for winner in winners %}
+                <li>
+                    <img src="{{ app.request.getBaseURL() }}{{ winner.webPath }}" alt="{{ winner }}" />
+                    <a href="{{ url('contest_set_winner', {slug: contest.slug, id: winner.id }) }}">{{ winner.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <ul>
+            <li><a href=""></a></li>
+        </ul>
+    {% endif %}
+{% endblock %}

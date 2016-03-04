@@ -4,6 +4,12 @@ parameters:
 #    parameter_name: value
 
 services:
+    app.contest_voter:
+        class: Contest\ContestBundle\Security\ContestVoter
+        tags:
+            - { name: security.voter }
+        # small performance boost
+        public: true
     # KernelRequest listener
     extension.listener:
         class: Contest\ContestBundle\Listener\DoctrineExtensionListener

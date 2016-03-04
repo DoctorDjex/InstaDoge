@@ -231,7 +231,6 @@ class Image
     {
         $this->votes->removeElement($user);
     }
-
     public function getAbsolutePath()
     {
         return null === $this->path
