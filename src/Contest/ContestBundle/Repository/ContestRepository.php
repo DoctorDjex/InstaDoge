@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ContestRepository extends EntityRepository
 {
-    public function findActives(){
+    public function findActivesQb(){
         $date = new \DateTime;
 
         $qb = $this->createQueryBuilder('c')
@@ -20,8 +20,7 @@ class ContestRepository extends EntityRepository
             ->andWhere('c.endDate > :date');
 
         $qb->setParameter('date', $date->format('Y-m-d'));
-
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 
     public function findFinished(){

@@ -21,9 +21,10 @@ class DatetimePickerType extends AbstractType {
      */
     public function buildForm( FormBuilderInterface $builder, array $options ) {
         $builder
-            ->add( 'date', 'text', [ 'attr'       => [ 'class'           => 'datetimepicker',
-                                                       'invalid_message' => 'Cette date n\'est pas valide !' ],
-                                     'empty_data' => new \DateTime(), ] );
+            ->add( 'date', 'text', [ 'attr'           => [ 'class'           => 'datetimepicker',
+                                                           'invalid_message' => 'Cette date n\'est pas valide !' ],
+                                     'empty_data'     => new \DateTime(),
+                                     'error_bubbling' => true ] );
 
         $builder->get( 'date' )
             ->addModelTransformer( new TextToDateTimeTransformer() );

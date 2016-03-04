@@ -16,5 +16,5 @@ services:
 
     contest.form.handler.contest:
         class: Contest\ContestBundle\Form\Handler\ContestHandler
-        arguments: [ @request, @doctrine.orm.entity_manager ]
+        arguments: [ "@request", "@doctrine.orm.entity_manager" ]
         scope : request

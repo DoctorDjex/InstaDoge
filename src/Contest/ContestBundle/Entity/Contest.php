@@ -250,4 +250,27 @@ class Contest
 
         return $winner;
     }
+
+    /**
+     * Add images
+     *
+     * @param \Contest\ContestBundle\Entity\Image $images
+     * @return Contest
+     */
+    public function addImage(\Contest\ContestBundle\Entity\Image $images)
+    {
+        $this->images[] = $images;
+
+        return $this;
+    }
+
+    /**
+     * Remove images
+     *
+     * @param \Contest\ContestBundle\Entity\Image $images
+     */
+    public function removeImage(\Contest\ContestBundle\Entity\Image $images)
+    {
+        $this->images->removeElement($images);
+    }
 }

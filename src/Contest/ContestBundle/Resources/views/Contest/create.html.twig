@@ -30,8 +30,11 @@
             <h1>Créer un concours</h1>
             {% if error is defined and not error %}
                 Le concours a été créé !
+            {% elseif error is defined and error %}
+                <p id="error">
+                    {{ form_errors(form) }}
+                </p>
             {% endif %}
-
 
             {{ form_start(form) }}
 
