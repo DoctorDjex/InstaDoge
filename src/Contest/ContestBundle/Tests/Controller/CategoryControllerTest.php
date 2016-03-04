@@ -4,12 +4,13 @@ namespace Contest\ContestBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class CategoryControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testDetails()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/details');
     }
+
 }

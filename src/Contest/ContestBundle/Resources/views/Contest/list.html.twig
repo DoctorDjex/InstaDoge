@@ -14,18 +14,20 @@
         <tr>
             {# sorting of properties based on query components #}
             <th{% if pagination.isSorted('a.Title') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Nom', 'a.title') }}</th>
+            <th{% if pagination.isSorted('a.Categories') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Catégorie', 'a.categories') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Créé le', ['a.date', 'a.time']) }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Commence le', ['a.date']) }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Termine le', ['a.date']) }}</th>
         </tr>
 
         {# table body #}
-        {% for article in pagination %}
+        {% for contest in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
-                <td><a href="{{ url('contest_details', {slug: article.slug}) }}">{{ article.title }}</a></td>
-                <td>{{ article.createdAt | date('d M Y') }}</td>
-                <td>{{ article.beginDate | date('d M Y') }}</td>
-                <td>{{ article.endDate | date('d M Y') }}</td>
+                <td><a href="{{ url('contest_details', {slug: contest.slug}) }}">{{ contest.title }}</a></td>
+                <td>{{ contest.category.name }}</td>
+                <td>{{ contest.createdAt | date('d M Y') }}</td>
+                <td>{{ contest.beginDate | date('d M Y') }}</td>
+                <td>{{ contest.endDate | date('d M Y') }}</td>
             </tr>
         {% endfor %}
     </table>

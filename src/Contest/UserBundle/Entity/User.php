@@ -20,7 +20,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var ArrayCollection Image $votes
+     * @var ArrayCollection Image
      *
      * Inverse Side
      *
@@ -34,9 +34,10 @@ class User extends BaseUser
         // your own logic
     }
 
-    public function hadAlreadyVoted( $image ){
-        foreach( $this->votes as $vote ){
-            if( $image->getId() == $vote->getId() ){
+    public function hadAlreadyVoted($image)
+    {
+        foreach ($this->votes as $vote) {
+            if ($image->getId() == $vote->getId()) {
                 return true;
             }
         }
@@ -45,9 +46,10 @@ class User extends BaseUser
     }
 
     /**
-     * Add votes
+     * Add votes.
      *
      * @param \Contest\ContestBundle\Entity\Image $votes
+     *
      * @return User
      */
     public function addVote(\Contest\ContestBundle\Entity\Image $votes)
@@ -58,7 +60,7 @@ class User extends BaseUser
     }
 
     /**
-     * Remove votes
+     * Remove votes.
      *
      * @param \Contest\ContestBundle\Entity\Image $votes
      */
@@ -68,9 +70,9 @@ class User extends BaseUser
     }
 
     /**
-     * Get votes
+     * Get votes.
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getVotes()
     {

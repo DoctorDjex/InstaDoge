@@ -15,8 +15,8 @@ class DefaultController extends Controller
     public function indexAction(Request $request, $nom)
     {
         $logger = $this->get('logger');
-        $logger->info('Nom : ' . $nom);
+        $logger->info('Nom : '.$nom);
 
-        return new Response("J'ai écrit " . $nom . " dans le log");
+        return new Response("J'ai écrit ".$nom.' dans le log');
     }
 }

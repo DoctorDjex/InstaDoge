@@ -7,7 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class ImageAdmin extends Admin{
+class ImageAdmin extends Admin
+{
     protected $baseRouteName = 'contest_image';
 
     protected $baseRoutePattern = 'image';
@@ -15,9 +16,9 @@ class ImageAdmin extends Admin{
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('title', 'text')
-            ->add('contest', 'sonata_type_model_autocomplete', array('property'=>'title'))
+            ->add('contest', 'sonata_type_model_autocomplete', array('property' => 'title'))
             ->add('description', 'textarea')
-            ->add('file', 'file', array( 'data_class' => null ));
+            ->add('file', 'file', array('data_class' => null));
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)

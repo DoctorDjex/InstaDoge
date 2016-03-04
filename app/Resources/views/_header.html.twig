@@ -18,6 +18,11 @@
                         <li><a href="{{ url('contest_create_contest') }}">Créer un concours</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="{{ url('categorie_index') }}">Catégories</a>
+
+                </li>
                 {% if not app.user %}
                     <li><a href="{{ url('fos_user_registration_register') }}">S'enregistrer</a></li>
                     <li><a href="{{ url('fos_user_security_login') }}">Connexion</a></li>
@@ -33,6 +38,5 @@
                 {% endif %}
             </ul>
         </nav>
-
     </header>
 </div>

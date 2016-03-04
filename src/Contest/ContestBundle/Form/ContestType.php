@@ -2,6 +2,7 @@
 
 namespace Contest\ContestBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -14,14 +15,18 @@ class ContestType extends AbstractType {
      * @param array                $options
      */
     public function buildForm( FormBuilderInterface $builder, array $options ) {
-        $builder
-            ->add( 'title' )
+
+        $builder->add( 'title' )
             ->add( 'beginDate', 'datetimepicker',
-                [ 'attr' => [ 'label' => 'Date de début' ],
-                  'invalid_message' => 'La date de début n\'est pas valide !' ] )
+                [ 'attr'            => [ 'label' => 'Date de début' ],
+                  'invalid_message' => 'La date de début n\'est pas valide !', ] )
             ->add( 'endDate', 'datetimepicker',
-                [ 'attr' => [ 'label' => 'Date de fin' ],
-                  'invalid_message' => 'La date de fin n\'est pas valide !' ] )
+                [ 'attr'            => [ 'label' => 'Date de fin' ],
+                  'invalid_message' => 'La date de fin n\'est pas valide !', ] )
+            ->add( 'category', EntityType::class, [
+                'class'        => 'Contest\ContestBundle\Entity\Category',
+                'choice_label' => 'name',
+            ] )
             ->add( 'Créer mon concours', 'submit' );
 
         $builder->addEventListener( FormEvents::POST_SUBMIT, function ( FormEvent $event ) {
@@ -46,7 +51,7 @@ class ContestType extends AbstractType {
      */
     public function setDefaultOptions( OptionsResolverInterface $resolver ) {
         $resolver->setDefaults( [
-            'data_class' => 'Contest\ContestBundle\Entity\Contest'
+            'data_class' => 'Contest\ContestBundle\Entity\Contest',
         ] );
     }
 
