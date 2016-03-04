@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace FOS\UserBundle\Controller;
+namespace Contest\UserBundle\Controller;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\Response;

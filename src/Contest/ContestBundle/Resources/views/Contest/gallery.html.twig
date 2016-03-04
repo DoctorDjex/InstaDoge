@@ -5,7 +5,7 @@
     <h1>Le concours : {{ contest }}</h1>
     {% for image in contest.images if image is defined %}
         <div class="image-container">
-            <img src="{{ image.webPath }}" alt="{{ image }}" />
+            <img src="{{ app.request.getBaseURL() }}{{ image.webPath }}" alt="{{ image }}" />
             <div class="image-description">
                 <p>
                     Titre : {{ image }}<br />

@@ -1,7 +1,12 @@
 {% extends "::without_sidebar.html.twig" %}
 
 {% block full_content %}
+    {{ form_start(form) }}
+    {{ form_label(form.search, 'Rechercher un concours') }}
+    {{ form_row(form.search) }}
+    {{ form_end(form) }}
     {# total items count #}
+    <h2>{{ titre }}</h2>
     <div class="count">
         Résultats par page : {{ pagination.getTotalItemCount }}
     </div>
