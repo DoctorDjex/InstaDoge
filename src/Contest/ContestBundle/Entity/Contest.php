@@ -51,7 +51,7 @@ class Contest
     /**
      * @var \Datetime
      *
-     * @ORM\Column(name="degin_date", type="datetime")
+     * @ORM\Column(name="begin_date", type="datetime")
      * @Assert\Expression("value <= this.getEndDate()", message="La date de début doit être inférieure à la date de fin.")
      */
     private $beginDate;
@@ -80,9 +80,16 @@ class Contest
      */
     private $images;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="winner_id", referencedColumnName="id")
+     */
+    private $winner;
+
     public function __construct() {
         $this->images = new ArrayCollection();
     }
+
 
     /**
      * @return \Datetime
@@ -210,6 +217,22 @@ class Contest
         $this->slug = $slug;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getWinner()
+    {
+        return $this->winner;
+    }
+
+    /**
+     * @param mixed $winner
+     */
+    public function setWinner($winner)
+    {
+        $this->winner = $winner;
+    }
+
     public function countAllVotes(){
         $count = 0;
 
@@ -231,24 +254,36 @@ class Contest
         }
     }
 
+    public function isOver(){
+        $now = new \DateTime('now');
+        return ($this->getEndDate()->getTimestamp() < $now->getTimestamp());
+    }
+
     public function __toString() {
         return $this->title;
     }
 
-    public function getWinner() {
-        if( empty( $this->images ) ){
-            return false;
-        }
-
-        $winner = $this->images[0];
-
-        foreach( $this->images as $image ){
-            if( count( $image->getVotes() > $winner->getVotes() ) ){
-                $winner = $image;
+    public function getWinners(){
+        $images = $this->getImages();
+        $winners = array();
+        $winners[] = $images[0];
+        foreach($images as $image){
+            if( count($winners[0]->getVotes()) < count($image->getVotes()) ){
+                $winners = array();
+                $winners[0] = $image;
+            }elseif(count($winners[0]->getVotes()) == count($image->getVotes()) && $winners[0]->getId() != $image->getId() ){
+                $winners[] = $image;
             }
         }
+        return $winners;
+    }
 
-        return $winner;
+    public function canSetWinner(Image $image){
+        return $this->hasImage($image) && $this->isOver();
+    }
+
+    public function hasImage(Image $image){
+        return $this->getId() == $image->getContest()->getId();
     }
 
     /**
