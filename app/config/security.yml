@@ -31,4 +31,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/details, role: IS_AUTHENTICATED_REMEMBERED }
         - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/user-votes, roles: ROLE_USER }
+        - { path: ^/user-votes, roles: IS_AUTHENTICATED_REMEMBERED }
