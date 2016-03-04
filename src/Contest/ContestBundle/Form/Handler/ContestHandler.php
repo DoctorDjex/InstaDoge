@@ -15,15 +15,34 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ContestHandler
 {
+    /**
+     * @var Request
+     */
     protected $request;
+
+    /**
+     * @var EntityManager
+     */
     protected $em;
 
+    /**
+     * ContestHandler constructor.
+     *
+     * @param Request       $request
+     * @param EntityManager $em
+     */
     public function __construct(Request $request, EntityManager $em)
     {
         $this->request = $request;
         $this->em = $em;
     }
 
+    /**
+     * @param FormInterface $form
+     * @param Contest       $contest
+     *
+     * @return bool
+     */
     public function process(FormInterface $form, Contest $contest)
     {
         $form->setData($contest);
@@ -39,6 +58,9 @@ class ContestHandler
         return false;
     }
 
+    /**
+     * @param Contest $contest
+     */
     protected function onSuccess(Contest $contest)
     {
         $this->em->persist($contest);

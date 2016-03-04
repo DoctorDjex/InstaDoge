@@ -78,17 +78,13 @@ class ContestController extends Controller
     {
         $contest = new Contest();
 
-        $form = $form = $this->createForm('contest_type', $contest);
+        $form = $this->createForm('contest_type', $contest);
         $viewVars = [];
 
         if ($request->getMethod() == 'POST') {
             $handler = $this->get('contest.form.handler.contest');
 
-            if ($handler->process($form, $contest)) {
-                $viewVars['error'] = false;
-            } else {
-                $viewVars['error'] = true;
-            }
+            $viewVars['error'] = !$handler->process($form, $contest);
         }
 
         $viewVars[ 'form' ] = $form->createView();
@@ -146,6 +142,7 @@ class ContestController extends Controller
     {
         $this->denyAccessUnlessGranted('view', $contest);
         $setimage = false;
+
         if ($contest->canSetWinner($image)) {
             $setimage = true;
             $contest->setWinner($image);
