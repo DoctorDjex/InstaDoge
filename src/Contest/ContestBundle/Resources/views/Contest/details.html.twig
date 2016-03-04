@@ -8,7 +8,7 @@
             <div id="content">
                 <h1>Le concours : {{ contest }}</h1>
                 <p>Créé le : {{ contest.createdAt|date("d M Y") }}</p>
-                <p>Par : {{ dump(contest.owner.email) }}</p>
+                <p>Par : {{ contest.owner.email }}</p>
                 <p>Commence le : {{ contest.beginDate|date("d M Y") }} à {{ contest.beginDate|date("H:i:s") }}</p>
                 <p>Finit le : {{ contest.endDate|date("d M Y") }} à {{ contest.endDate|date("H:i:s") }}</p>
                 <p>Nombre total de votes : {{ contest.countAllVotes() }}</p>
