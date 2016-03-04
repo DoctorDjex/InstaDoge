@@ -24,7 +24,7 @@
         {% for contest in pagination %}
             <tr {% if loop.index is odd %}class="color"{% endif %}>
                 <td><a href="{{ url('contest_details', {slug: contest.slug}) }}">{{ contest.title }}</a></td>
-                <td>{{ contest.category.name}}</td>
+                <td>{{ contest.category.name }}</td>
                 <td>{{ contest.createdAt | date('d M Y') }}</td>
                 <td>{{ contest.beginDate | date('d M Y') }}</td>
                 <td>{{ contest.endDate | date('d M Y') }}</td>
