@@ -1,19 +1,11 @@
-{% extends "::base.html.twig" %}
+{% extends "::without_sidebar.html.twig" %}
 
-{% block title %}ContestContestBundle:Contest:details{% endblock %}
-
-{% block content %}
-    <div id="main-wrapper">
-        <div class="container">
-            <div id="content">
-                <h1>Le concours : {{ contest }}</h1>
-                <p>Créé le : {{ contest.createdAt|date("d M Y") }}</p>
-                <p>Par : {{ contest.owner.email }}</p>
-                <p>Commence le : {{ contest.beginDate|date("d M Y") }} à {{ contest.beginDate|date("H:i:s") }}</p>
-                <p>Finit le : {{ contest.endDate|date("d M Y") }} à {{ contest.endDate|date("H:i:s") }}</p>
-                <p>Nombre total de votes : {{ contest.countAllVotes() }}</p>
-                <p><a href="{{ url('contest_gallery', {slug: contest.slug}) }}">Je participe !</a></p>
-            </div>
-        </div>
-    </div>
+{% block full_content %}
+    <h1>Le concours : {{ contest }}</h1>
+    <p>Créé le : {{ contest.createdAt|date("d M Y") }}</p>
+    <p>Par : {{ contest.owner.email }}</p>
+    <p>Commence le : {{ contest.beginDate|date("d M Y") }} à {{ contest.beginDate|date("H:i:s") }}</p>
+    <p>Finit le : {{ contest.endDate|date("d M Y") }} à {{ contest.endDate|date("H:i:s") }}</p>
+    <p>Nombre total de votes : {{ contest.countAllVotes() }}</p>
+    <p><a href="{{ url('contest_gallery', {slug: contest.slug}) }}">Je participe !</a></p>
 {% endblock %}

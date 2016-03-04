@@ -23,6 +23,21 @@ class ContestRepository extends EntityRepository
         return $qb;
     }
 
+    public function findActivesByName($name){
+        $date = new \DateTime;
+        $qb = $this->createQueryBuilder('c');
+            $qb->andWhere('c.beginDate <= :date')
+            ->andWhere('c.endDate > :date')
+            ->andWhere(
+                $qb->expr()->like('c.title', ':name')
+            );
+
+        $qb->setParameter('date', $date->format('Y-m-d'));
+        $qb->setParameter('name', '%'. $name . '%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function findFinished(){
         $date = new \DateTime;
 

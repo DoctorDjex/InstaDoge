@@ -4,6 +4,11 @@ services:
         tags:
             - { name: form.type, alias: contest_type }
 
+    contest.form.contest_search_contest:
+            class: Contest\ContestBundle\Form\SearchContestType
+            tags:
+                - { name: form.type, alias: contest_search_contest }
+
     contest.form.image_type:
         class: Contest\ContestBundle\Form\ImageType
         tags:

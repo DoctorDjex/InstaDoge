@@ -17,16 +17,35 @@ class ContestController extends Controller
      */
     public function listAction( Request $request )
     {
-        $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesQb();
-
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $contests, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
-        );
-
-        return [ 'pagination' => $pagination ];
+        $titrepage = '';
+        $form = $this->createForm('contest_search_contest');
+        $formView = $form->createView();
+        if( $request->getMethod() == "POST" ){
+            $form->handleRequest($request);
+            $data = $form->getData();
+            $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesByName($data['search']);
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $contests, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10/*limit per page*/
+            );
+            $titrepage = 'Résultats de la recherche pour "' . $data['search'] . '"';
+        }else{
+            $contests = $this->getDoctrine()->getManager()->getRepository('ContestContestBundle:Contest')->findActivesQb();
+            $paginator = $this->get('knp_paginator');
+            $pagination = $paginator->paginate(
+                $contests, /* query NOT result */
+                $request->query->getInt('page', 1)/*page number*/,
+                10/*limit per page*/
+            );
+            $titrepage = 'Tous les concours';
+        }
+        return [
+            'pagination' => $pagination,
+            'form' => $formView,
+            'titre' => $titrepage
+        ];
     }
 
     /**
@@ -86,5 +105,13 @@ class ContestController extends Controller
         }
 
         return $viewVars;
+    }
+
+    /**
+     * @Route("/search/contest", name="contest_search_contest")
+     * @Template()
+     */
+    public function searchAction(Request $request){
+
     }
 }
