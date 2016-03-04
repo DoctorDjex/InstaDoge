@@ -15,8 +15,11 @@ class ImageControllerTest extends BaseWebTestController {
         $this->logIn();
 
         $contest = $this->om->getRepository( "ContestContestBundle:Contest" )->findBy( [ 'title' => "Titre n°1" ] )[0];
+        $url = $this->client->getContainer()->get( "router" )->generate( "contest_image_upload", [
+            'slug' => $contest->getSlug()
+        ] );
 
-        $crawler = $this->client->request( 'GET', '/' . $contest->getSlug() . '/upload/image' );
+        $crawler = $this->client->request( 'GET', $url );
 
         $photo = new UploadedFile(
             '/Users/Guillaume/Sites/cours_esgi_sf2/web/uploads/test/image1.jpeg',
@@ -38,7 +41,7 @@ class ImageControllerTest extends BaseWebTestController {
         $this->assertEquals( 200, $response->getStatusCode() );
         $this->assertContains( 'L\'image a été envoyée', $response->getContent() );
 
-        $image = $this->om->getRepository( "ContestContestBundle:Image" )->findBy( [ 'title' => "Titre image : " . self::$title ] )[0];
+        $image = $image = $this->getImage();
 
         $user = $this->client->getContainer()->get( "security.token_storage" )->getToken()->getUser();
         $this->assertEquals( $image->getOwner()->getId(), $user->getId() );
@@ -49,13 +52,30 @@ class ImageControllerTest extends BaseWebTestController {
         $this->om->clear();
     }
 
+    public function testUploadImage_Fail_NotLoggedIn(){
+        $contest = $this->om->getRepository( "ContestContestBundle:Contest" )->findBy( [ 'title' => "Titre n°1" ] )[0];
+
+        $url = $this->client->getContainer()->get( "router" )->generate( "contest_image_upload", [
+            'slug' => $contest->getId()
+        ] );
+        $crawler = $this->client->request( 'GET', $url );
+
+        $this->checkRedirectedToLogin();
+    }
+
+    public function testVote_Fail_NotLoggedIn(){
+        $response = $this->sendVote(false);
+
+        $this->checkRedirectedToLogin();
+    }
+
     public function testVote_Success() {
         $response = $this->sendVote();
 
         $this->assertEquals( 200, $response->getStatusCode() );
         $this->assertContains( "Merci d'avoir voté !", $response->getContent() );
 
-        //$image = $this->om->getRepository( "ContestContestBundle:Image" )->findBy( [ 'title' => "Titre image : " . self::$title ] )[0];
+        $image = $this->getImage();
 
         $this->assertEquals( 1, count( $image->getVotes() ) );
     }
@@ -66,17 +86,18 @@ class ImageControllerTest extends BaseWebTestController {
         $this->assertEquals( 200, $response->getStatusCode() );
         $this->assertContains( "Vous avez déjà voté pour cette photo !", $response->getContent() );
 
-        //$image = $this->om->getRepository( "ContestContestBundle:Image" )->findBy( [ 'title' => "Titre image : " . self::$title ] )[0];
+        $image = $this->getImage();
 
         $this->assertEquals( 1, count( $image->getVotes() ) );
     }
 
-    protected function sendVote() {
-        $this->logIn();
+    protected function sendVote( $withLogin = true ) {
+        if( $withLogin ){
+            $this->logIn();
+        }
 
         $url = $this->client->getContainer()->get( "router" )->generate( "contest_image_vote", [
-            'id' => $this->om->getRepository( "ContestContestBundle:Image" )
-                ->findBy( [ 'title' => "Titre image : " . self::$title ] )[0]
+            'id' => $this->getImage()
                 ->getId()
         ] );
 
@@ -85,4 +106,7 @@ class ImageControllerTest extends BaseWebTestController {
         return $this->client->getResponse();
     }
 
+    protected function getImage(){
+        return $this->om->getRepository( "ContestContestBundle:Image" )->findBy( [ 'title' => "Titre image : " . self::$title ] )[0];
+    }
 }

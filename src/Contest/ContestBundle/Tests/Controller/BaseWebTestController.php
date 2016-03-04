@@ -42,4 +42,10 @@ class BaseWebTestController extends WebTestCase{
         $cookie = new Cookie( $session->getName(), $session->getId() );
         $this->client->getCookieJar()->set( $cookie );
     }
+
+    protected function checkRedirectedToLogin(){
+        // Sans login, impossible d'accéder à la page donc redirection vers la page de login
+        $this->assertTrue( 302 === $this->client->getResponse()->getStatusCode() );
+        $this->assertRegExp( '/\/login$/', $this->client->getResponse()->headers->get( 'location' ) );
+    }
 }
