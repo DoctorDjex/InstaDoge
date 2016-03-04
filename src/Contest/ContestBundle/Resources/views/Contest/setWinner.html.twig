@@ -1,1 +1,6 @@
-test twig set image
+{% extends '::without_sidebar.html.twig' %}
+{% block full_content %}
+    {% if not setimage %}
+        <p>Une erreur s'est produite: ce concours n'est pas encore terminé, ou l'url est fausse !</p>
+    {% endif %}
+{% endblock %}
